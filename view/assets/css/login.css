@@ -1,15 +1,15 @@
-:root{
-    --txt-color: #fff;
+:root {
+  --txt-color: #fff;
 }
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: cursive;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: cursive;
 }
 
-section {
+/* body {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,143 +26,185 @@ section {
     100% {
         filter: hue-rotate(360deg);
     }
+} */
+
+body {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(../img/flower.jpg) no-repeat center/cover;
+  animation: animateBg 5s linear infinite;
+  z-index: -1;
+}
+
+@keyframes animateBg {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
 }
 
 .login-box {
-    position: relative;
-    width: 400px;
-    max-width: 90%;
-    height: auto;
-    background-color: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(15px);
-    padding: 20px;
+  position: relative;
+  width: 400px;
+  max-width: 90%;
+  height: auto;
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(15px);
+  padding: 20px;
 }
 
 h2 {
-    font-size: 2em;
-    color: var(--txt-color);
-    text-align: center;
+  font-size: 2em;
+  color: var(--txt-color);
+  text-align: center;
 }
 
 .input-box {
-    position: relative;
-    width: 310px;
-    max-width: 100%;
-    margin: 30px 0;
-    border-bottom: 2px solid var(--txt-color);
+  position: relative;
+  width: 310px;
+  max-width: 100%;
+  margin: 30px 0;
+  border-bottom: 2px solid var(--txt-color);
 }
 
 .input-box label {
-    position: absolute;
-    top: 50%;
-    left: 5px;
-    transform: translateY(-50%);
-    font-size: 1em;
-    color: var(--txt-color);
-    pointer-events: none;
-    transition: .5s;
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  font-size: 1em;
+  color: var(--txt-color);
+  pointer-events: none;
+  transition: 0.5s;
 }
 
 .input-box input:focus ~ label,
 .input-box input:not(:placeholder-shown) ~ label {
-    top: -5px;
+  top: -5px;
 }
 
 .input-box input {
-    width: 100%;
-    height: 50px;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 1em;
-    color: var(--txt-color);
-    padding: 0 35px 0 5px;
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  color: var(--txt-color);
+  padding: 0 35px 0 5px;
 }
 
 .input-box .icon {
-    position: absolute;
-    right: 8px;
-    color: var(--txt-color);
-    font-size: 1.2em;
-    line-height: 57px;
+  position: absolute;
+  right: 8px;
+  color: var(--txt-color);
+  font-size: 1.2em;
+  line-height: 57px;
 }
 
 .remember-forgot {
-    margin: -15px 0 15px;
-    font-size: .9em;
-    color: var(--txt-color);
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  margin: -15px 0 15px;
+  font-size: 0.9em;
+  color: var(--txt-color);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .remember-forgot label input {
-    margin-right: 3px;
+  margin-right: 3px;
 }
 
 .remember-forgot a {
-    color: var(--txt-color);
-    text-decoration: none;
+  color: var(--txt-color);
+  text-decoration: none;
 }
 
-.remember-forgot a:hover{
-    text-decoration: underline;
+.remember-forgot a:hover {
+  text-decoration: underline;
 }
 
 button {
-    width: 100%;
-    height: 40px;
-    background: var(--txt-color);
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    cursor: pointer;
-    font-size: 1em;
-    color: #000;
-    font-weight: 500;
+  width: 100%;
+  height: 40px;
+  background: var(--txt-color);
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  cursor: pointer;
+  font-size: 1em;
+  color: #000;
+  font-weight: 500;
 }
 
 .register-link {
-    font-size: .9em;
-    color: var(--txt-color);
-    text-align: center;
-    margin: 25px 0 10px;
+  font-size: 0.9em;
+  color: var(--txt-color);
+  text-align: center;
+  margin: 25px 0 10px;
 }
 
 .register-link p a {
-    color: var(--txt-color);
-    text-decoration: none;
-    font-weight: 600;
+  color: var(--txt-color);
+  text-decoration: none;
+  font-weight: 600;
 }
 
 .register-link p a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 @media (max-width: 480px) {
-    .login-box {
-        width: 90%;
-        height: auto;
-        padding: 20px;
-    }
-    .input-box {
-        width: 100%;
-    }
-    h2 {
-        font-size: 1.8em;
-    }
-    .remember-forgot {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-    .remember-forgot label,
-    .remember-forgot a {
-        margin-top: 5px;
-    }
+  .login-box {
+    width: 90%;
+    height: auto;
+    padding: 20px;
+  }
+  .input-box {
+    width: 100%;
+  }
+  h2 {
+    font-size: 1.8em;
+  }
+  .remember-forgot {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .remember-forgot label,
+  .remember-forgot a {
+    margin-top: 5px;
+  }
+}
+h1 {
+  background-color: transparent;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  color: var(--txt-color);
+}
+h1 span {
+  color: #ab4e68;
 }

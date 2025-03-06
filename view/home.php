@@ -1,19 +1,14 @@
 <?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+   header("Location: login.html");
+   exit();
+}
+$user_id = $_SESSION['user_id'];
+$role = $_SESSION['role'];
+
 require_once '../db.php';
 $pdo = Database::getInstance()->getConnection();
-
-// // Fetch products from the database
-// $stmt = $pdo->prepare("SELECT id, name, price, image, description FROM products");
-// $stmt->execute();
-// $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-
-// // Prepare and execute the search query safely
-// $stmt = $pdo->prepare("SELECT * FROM products WHERE name LIKE :search");
-// $stmt->execute(['search' => "%$search%"]);
-// $products = $stmt->fetchAll();
-
 
 // Fetch categories from the database
 $categoryStmt = $pdo->prepare("SELECT id, name FROM categories");
@@ -28,50 +23,8 @@ $productStmt = $pdo->prepare("SELECT * FROM products WHERE (:search = '' OR name
 $productStmt->execute(['search' => "%$search%", 'category' => $category]);
 $products = $productStmt->fetchAll(PDO::FETCH_ASSOC);
 
-
-
-// coupon --------------------------------------
-
-// include "config.php"; // Ensure your database connection is included
-
-$response = "Invalid request.";
-
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if (isset($_POST["coupon"])) {
-        $couponCode = trim($_POST["coupon"]);
-        if (empty($couponCode)) {
-            $response = "Coupon code is required.";
-        } else {
-            try {
-                $stmt = $pdo->prepare("SELECT discount, expiration_date FROM coupons WHERE code = :code");
-                $stmt->execute(["code" => $couponCode]);
-                $coupon = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                if ($coupon) {
-                    $expirationDate = $coupon["expiration_date"];
-                    $currentDate = date("Y-m-d");
-
-                    if ($expirationDate < $currentDate) {
-                        $response = "Coupon is expired.";
-                    } else {
-                        $response = "success;" . $coupon["discount"];
-                    }
-                } else {
-                    $response = "Invalid coupon.";
-                }
-                echo $response;
-            } catch (PDOException $e) {
-                $response = "Database error: " . $e->getMessage();
-            }
-        }
-    }
-}
-
-
-
-
+require '../controller/coupon.php';
 ?>
-
 
 
 
@@ -88,7 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
    <!--=============== BootstrapIcon ===============-->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-   <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
 
    <link rel="stylesheet" href="./assets/css/home.css">
 
@@ -117,19 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                   </a>
                </li>
 
-               <li class="nav__item">
-                  <a href="#" class="nav__link">
-                     <i class="ri-arrow-right-up-line"></i>
-                     <span>Products</span>
-                  </a>
-               </li>
+               
 
-               <li class="nav__item">
-                  <a href="#" class="nav__link">
-                     <i class="ri-arrow-right-up-line"></i>
-                     <span>Review</span>
-                  </a>
-               </li>
 
                <li class="nav__item">
                   <a href="#" class="nav__link">
@@ -137,6 +78,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                      <span>Contact</span>
                   </a>
                </li>
+
+               <?php
+               if ($role == "admin")
+                  echo
+                  "<li class='nav__item'>
+                  <a href='./admin/index.php' class='nav__link'>
+                     <i class='ri-arrow-right-up-line'></i>
+                     <span>AdminDB</span>
+                  </a>
+               </li> ";
+               elseif ($role == "super_admin") {
+                  echo
+                  "<li class='nav__item'>
+                  <a href='./superAdmin/index.php' class='nav__link'>
+                     <i class='ri-arrow-right-up-line'></i>
+                     <span>SAdminDB</span>
+                  </a>
+               </li> ";
+               }
+               ?>
             </ul>
 
             <!-- Close button -->
@@ -149,14 +110,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                   <i class="ri-shopping-cart-2-fill"><small class="cart-qty">0</small></i>
                </a>
 
-               <a href="#" class="nav__social-link">
+               <a href="./profile.php" class="nav__social-link">
                   <i class="ri-user-fill"></i>
                </a>
 
-               <a href="#" class="nav__social-link">
+               <a href="../controller/logout.php" id="logout-btn" class="nav__social-link">
                   <i class="ri-logout-box-r-fill"></i>
                </a>
-               
+
             </div>
          </div>
 
@@ -169,52 +130,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
    <!--==================== MAIN ====================-->
    <main>
-      
       <section class="crd-container">
-         <!-- checkout pop-up -->
-         <!-- <div class="modal-c" id="checkout-modal">
-    <div class="modal-content-c">
-        <span class="close-button-c" id="close-button">&times;</span>
-        <h2>Checkout</h2>
-        <p>Total Price: <span id="total-price"></span></p>
-        <div class="payment-method">
-            <label for="payment-method-select">your Payment Method: Cash on Delivery</label>
-            <select id="payment-method-select">
-                <option value="credit-card">Credit Card</option>
-                <option value="paypal">PayPal</option>
-                <option value="cash-on-delivery">Cash on Delivery</option>
-            </select>
-        </div>
-        <button id="confirm-button">Confirm Purchase</button>
-    </div>
-</div> -->
-  
-          <!-- end checkout pop-up -->
          <h2 class="container__title">Select Your Product</h2>
 
-          <!-- Categories Section -->
-      
-          <div class="categories">
+         <!-- Categories Section -->
+
+         <div class="categories">
             <h3>Categories <i class="ri-arrow-down-s-fill"></i></h3>
             <ul class="categories_types">
-            <li>
+               <li>
                   <a href="home.php?category=" class="category-link">All</a>
                </li>
                <?php foreach ($categories as $category): ?>
-                  <li >
-                     <a  href="home.php?category=<?= htmlspecialchars($category['id']) ?>">
+                  <li>
+                     <a href="home.php?category=<?= htmlspecialchars($category['id']) ?>">
                         <?= htmlspecialchars($category['name']) ?>
                      </a>
                   </li>
                <?php endforeach; ?>
             </ul>
             <form class="search" method="GET" action="home.php">
-      <input class="input" type="text" name="search" placeholder="Search for flowers...">
-      <button class="btn" type="submit"><i class="fas fa-search "></i></button>
-      </form>
-         
+               <input class="input" type="text" name="search" placeholder="Search for flowers...">
+               <button class="btn" type="submit"><i class="fas fa-search "></i></button>
+            </form>
+
          </div>
-         
+
+
+         <!-- ____________search bar___________ -->
+
+
          <div class="card__container">
             <?php foreach ($products as $product): ?>
                <article>
@@ -243,11 +188,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                </article>
             <?php endforeach; ?>
          </div>
-         
       </section>
    </main>
 
-   
    <!--=============== cart ===============-->
    <div class="cart-overlay"></div>
    <div class="cart">
@@ -265,28 +208,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
          <!-- coupon  -->
          <div class="coupon-section">
          <input type="text" id="coupon-code" placeholder="Enter Coupon Code">
-         <button onclick="applyCoupon()">Apply Coupon</button>
+         <button id="coupon-apply" onclick="applyCoupon()">Apply Coupon</button>
          <p id="coupon-message"></p>
          </div>
          <!-- end coupon  -->
 
          <button class="cart-clear">Clear Cart</button>
-         <button class="checkout" id="checkout-button"><a href="./checkout.html">Checkout</a></button>
-         
-
-         
+         <a href="./cheackout.php" ><button class="checkout" id="checkoutBtn">Checkout</button></a>
       </div>
    </div>
 
 
-
-
-
-   
-
    <!--=============== MAIN JS ===============-->
    <script src="./assets/js/home.js"></script>
-   <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
 </body>
 
 </html>

@@ -1,6 +1,4 @@
-// Declare the variable in the global scope
 let appliedCoupon = 0;
-
 /*=============== Nav ===============*/
 /*=============== SHOW MENU ===============*/
 const navMenu = document.getElementById("nav-menu"),
@@ -152,7 +150,7 @@ function updateQuantity(id, action) {
 function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
-// Modify renderCart function to apply discount
+
 function renderCart() {
   selectors.cartBody.innerHTML = "";
   let totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
@@ -188,9 +186,9 @@ function renderCart() {
           <h3>${name}</h3>
           <h5>$${price.toFixed(2)}</h5>
           <div class="cart-item-amount">
-              <button data-btn="decr">-</button>
+              <button data-btn="decr" class="incr-decr">-</button>
               <span class="qty">${qty}</span>
-              <button data-btn="incr">+</button>
+              <button data-btn="incr" class="incr-decr">+</button>
               <span class="cart-item-price">$${amount.toFixed(2)}</span>
           </div>
       </div>
@@ -234,88 +232,42 @@ window.applyCoupon = async function () {
       document.getElementById(
         "coupon-message"
       ).textContent = `Coupon Applied! You got ${appliedCoupon}% off.`;
+      document.getElementById("coupon-message").style.color = "green";
+      document.getElementById("coupon-message").style.margin = "10px 0px";
+
       renderCart(); // Recalculate total price
     } else {
-      document.getElementById("coupon-message").textContent = data;
+      document.getElementById("coupon-message").textContent =
+        data.split(";")[0];
+      document.getElementById("coupon-message").style.color = "red";
+      document.getElementById("coupon-message").style.margin = "10px 0px ";
     }
   } catch (error) {
     console.error("There has been a problem with your fetch operation:", error);
     document.getElementById("coupon-message").textContent =
       "Error applying coupon. Please try again.";
+    document.getElementById("coupon-message").style.color = "red";
   }
 };
 
 /*=============== categories ===============*/
-categories_types = document.querySelector(".categories_types");
-arrow_types = document.querySelector(".ri-arrow-down-s-fill");
+const categoriesTypes = document.querySelector(".categories_types");
+const arrowTypes = document.querySelector(".ri-arrow-down-s-fill");
 
-arrow_types.addEventListener("click", () => {
-  if (categories_types.style.display == "flex") {
-    categories_types.style.display = "none";
-  } else {
-    categories_types.style.display = "flex";
-  }
+arrowTypes.addEventListener("click", () => {
+  categoriesTypes.classList.toggle("active");
+});
+//=================logout==================//
+document.getElementById("logout-btn").addEventListener("click", () => {
+  localStorage.clear();
 });
 
-// ____________Checkout________________
-// document.addEventListener("DOMContentLoaded", function () {
-//   const checkoutButton = document.getElementById("checkout-button");
-//   const modalz = document.getElementById("checkout-modal");
-//   const closeButton = document.getElementById("close-button");
-//   const totalPriceElement = document.getElementById("total-price");
-//   const confirmButton = document.getElementById("confirm-button");
+//////////////////////////////////////////////
+// Checkout button functionality
+document.getElementById("checkoutBtn").addEventListener("click", () => {
+  // Calculate the total price (with coupon discount if applied)
+  let totalPrice = parseFloat(selectors.cartTotal.textContent.replace("$", ""));
 
-//   // Function to display total price in the modal
-//   function displayTotalPrice() {
-//     const totalPrice = calculateTotal(); // Assuming calculateTotal() returns the total amount
-//     totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
-//   }
-
-//   checkoutButton.addEventListener("click", function () {
-//     displayTotalPrice(); // Update total price before showing modal
-//     modalz.style.display = "block";
-//   });
-
-//   closeButton.addEventListener("click", function () {
-//     modalz.style.display = "none";
-//   });
-
-//   window.addEventListener("click", function (event) {
-//     if (event.target === modalz) {
-//       modalz.style.display = "none";
-//     }
-//   });
-
-//   confirmButton.addEventListener("click", function () {
-//     const paymentMethod = document.getElementById(
-//       "payment-method-select"
-//     ).value;
-//     alert(
-//       `Thank you for your purchase! You selected ${paymentMethod} as your payment method. Your total price is
-//       ${totalPriceElement.textContent}.`
-//     );
-//     // You can further process the payment here
-//     modalz.style.display = "none";
-//   });
-// });
-
-// // Assuming your existing calculateTotal function looks something like this:
-// function calculateTotal() {
-//   let total = 0;
-//   cart.forEach(({ id, qty }) => {
-//     let product = document.querySelector(`.card__product[data-id="${id}"]`);
-//     if (!product) return;
-
-//     let price = parseFloat(
-//       product.querySelector(".card__price").textContent.replace("$", "")
-//     );
-//     total += price * qty;
-//   });
-
-//   // Apply discount if coupon is valid
-//   if (appliedCoupon) {
-//     total = total - (total * appliedCoupon) / 100;
-//   }
-
-//   return total;
-// }
+  // Save the total price to local storage
+  localStorage.setItem("totalPrice", totalPrice);
+});

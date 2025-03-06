@@ -1,4 +1,4 @@
-/*=============== GOOGLE FONTS ===============*/
+/* =============== GOOGLE FONTS ===============*/
 @import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500&display=swap");
 
 /*=============== VARIABLES CSS ===============*/
@@ -628,6 +628,7 @@ a {
 .cart-footer div {
   grid-column: 1 / -1;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   font-size: 1.25rem;
@@ -649,17 +650,20 @@ a {
 }
 
 .cart-clear:hover {
-  background-color: var(--primery-color);
+  /* background-color: var(--primery-color); */
   cursor: pointer;
+  transform: scale(1.1);
 }
 
 .checkout {
   background: var(--white-color);
   color: var(--black-color);
+  padding: 53px;
 }
 
 .checkout:hover {
-  background: var(--primery-color);
+  /* background: var(--primery-color); */
+  transform: scale(1.1);
   cursor: pointer;
 }
 
@@ -669,6 +673,7 @@ a {
   font-size: small;
   display: none;
 }
+
 /* ----------sertch----------- */
 .search {
   position: relative;
@@ -737,9 +742,6 @@ a {
   display: none;
 }
 
-/* Checkout pop-up */
-
-/* end Checkout pop-up */
 @media screen and (max-width: 900px) {
   .categories_types {
     display: none;
@@ -747,8 +749,39 @@ a {
     align-items: center;
     gap: 1rem;
   }
+  .categories_types.active {
+    display: flex;
+  }
   .ri-arrow-down-s-fill {
     display: inline;
     cursor: pointer;
   }
+}
+
+/* ================coupon================   */
+#coupon-apply {
+  flex: 1 1 0;
+  background: transparent;
+  margin-left: 10px;
+}
+#coupon-apply:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+#coupon-message {
+  color: red;
+  margin: 10px 0px;
+}
+#coupon-code {
+  padding: 10px;
+  border: 2px solid black;
+}
+/* =================end coupon================  */
+
+.incr-decr {
+  background-color: transparent;
+  padding: 0px 5px;
+  border-radius: 22px;
+  border: 1px solid var(--black-color);
+  cursor: pointer;
 }

@@ -1,0 +1,133 @@
+/* Import font from Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap");
+
+/* Universal styles */
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-transform: capitalize;
+  transition: all 0.2s linear;
+}
+
+/* Container styles */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  min-height: 100vh;
+  background: transparent;
+}
+
+/* Form styles */
+.container form {
+  padding: 20px;
+  width: 700px;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Row styles */
+.container form .row {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Column styles */
+.container form .row .col {
+  margin-bottom: 20px;
+}
+
+/* Title styles */
+.container form .row .col .title {
+  font-size: 20px;
+  color: #333;
+  padding-bottom: 5px;
+  text-transform: uppercase;
+}
+
+/* InputBox styles */
+.container form .row .col .inputBox {
+  margin: 15px 0;
+}
+
+/* InputBox span styles */
+.container form .row .col .inputBox span {
+  margin-bottom: 10px;
+  display: block;
+  justify-content: center;
+}
+
+/* InputBox input styles */
+.container form .row .col .inputBox input {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  font-size: 15px;
+  text-transform: none;
+  justify-content: center;
+}
+
+/* InputBox input focus styles */
+.container form .row .col .inputBox input:focus {
+  border: 1px solid #000;
+}
+
+/* Flex container styles */
+.container form .row .col .flex {
+  display: flex;
+
+  gap: 15px;
+}
+
+/* Flex inputBox styles */
+.container form .row .col .flex .inputBox {
+  margin-top: 5px;
+}
+
+/* Image styles */
+.container form .row .col .inputBox img {
+  height: 34px;
+  margin-top: 5px;
+  filter: drop-shadow(0 0 1px #000);
+}
+
+/* Submit button styles */
+.container form .submit-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 17px;
+  background: #f4b5c7;
+  color: #fff;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+/* Submit button hover styles */
+.container form .submit-btn:hover {
+  background: #ab4e68;
+}
+
+/* Payment details styles */
+.payment-details {
+  display: none;
+}
+.pay-meth {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 2rem;
+}
+.payment-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 17px;
+  background: #f4b5c7;
+  color: #ffffff;
+  margin-top: 5px;
+  cursor: pointer;
+}

@@ -1,0 +1,42 @@
+.body {
+  text-align: center;
+  background-color: #fff;
+  padding: 40px 20px;
+}
+.about-section {
+  max-width: 1000px;
+  margin: auto;
+}
+.about-section h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+.about-section p {
+  font-size: 1.1em;
+  color: #666;
+  margin-bottom: 30px;
+}
+.team {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  justify-content: center;
+}
+.team-member {
+  text-align: center;
+}
+.team-member img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #eee;
+}
+.team-member h3 {
+  font-size: 1.2em;
+  margin-top: 10px;
+}
+.team-member p {
+  font-size: 0.9em;
+  color: #777;
+}

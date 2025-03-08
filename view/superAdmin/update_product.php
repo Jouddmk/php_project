@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle image upload
     if ($_FILES['image']['name']) {
         $image = $_FILES['image']['name'];
-        $target = "product_images/" . basename($image);
+        $target = "../assets/img/" . basename($image);
         move_uploaded_file($_FILES['image']['tmp_name'], $target);
     } else {
         // Keep the existing image if no new image is uploaded
@@ -35,4 +35,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     header("Location: product.php");
 }
-?>

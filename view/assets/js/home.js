@@ -108,6 +108,11 @@ document.addEventListener("click", (e) => {
     );
   }
 });
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("unnuser")) {
+    window.location.href = "../view/login.html";
+  }
+});
 
 // Cart Functions
 function hideCart() {

@@ -32,15 +32,15 @@ $role = $_SESSION['role'];
           </div>
           <div class="inputBox">
             <span>City :</span>
-            <input type="text" placeholder="Amman" required/>
+            <input type="text" placeholder="Amman" required />
           </div>
         </div>
 
         <div class="col">
-          <h3 class="title">Payment</h3>
+          <h3 class="title">Payment Method</h3>
 
           <div class="inputBox">
-            <span>Payment Method:</span>
+
             <div class="pay-meth">
               <button
                 type="button"
@@ -102,11 +102,11 @@ $role = $_SESSION['role'];
   <script>
     function togglePayment(method) {
       document.getElementById("cash-btn").style.background =
-        method === "cod" ? "#ab4e68" : "#f4b5c7";
+        method === "cod" ? "#c95b7a" : "#ab4e68";
       document.getElementById("visa-details").style.display =
         method === "visa" ? "block" : "none";
       document.getElementById("visa-btn").style.background =
-        method === "visa" ? "#ab4e68" : "#f4b5c7";
+        method === "visa" ? "#c95b7a" : "#ab4e68";
     }
 
     // Initialize with no payment details shown
@@ -119,7 +119,7 @@ $role = $_SESSION['role'];
     document.querySelector('.submit-btn').addEventListener('click', function(event) {
       // Prevent default form submission to handle it manually
       event.preventDefault();
-      
+
       // Assuming you have cartData and totalPrice variables
       var cartData = cartDataL;
       var totalPrice = totalPriceL;

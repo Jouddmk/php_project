@@ -38,9 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['error_email'] = "Email doesn't exist";
         header("Location: ../view/login.html");
         exit();
-        
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
 }
-?>
